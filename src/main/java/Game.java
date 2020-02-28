@@ -3,103 +3,32 @@ import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
-
 import java.io.IOException;
 
-public class Application {
-    public static void main(String[] args) {
+public class Game {
+    Screen screen;
+    public Game(Screen screen){
+        this.screen = screen;
         try {
             Terminal terminal = new DefaultTerminalFactory().createTerminal();
-            Screen screen = new TerminalScreen(terminal);
+            screen = new TerminalScreen(terminal);
 
             screen.setCursorPosition(null);   // we don't need a cursor
             screen.startScreen();             // screens must be started
             screen.doResizeIfNecessary();     // resize screen if necessary
-            screen.clear();
-            screen.setCharacter(10, 10, new TextCharacter('X'));
-            screen.refresh();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        }
+    private void draw() throws IOException {
+        screen.clear();
+        screen.setCharacter(10, 10, new TextCharacter('X'));
+        screen.refresh();
     }
+    public void run(){
+        Game game = new Game();
+        game.draw();
+    }
+
+   
 }
