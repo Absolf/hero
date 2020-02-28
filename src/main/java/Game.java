@@ -6,9 +6,11 @@ import com.googlecode.lanterna.terminal.Terminal;
 import java.io.IOException;
 
 public class Game {
-    Screen screen;
-    public Game(Screen screen){
-        this.screen = screen;
+    public TerminalScreen screen;
+    private int x = 10;
+    private int y = 10;
+
+    public Game(){
         try {
             Terminal terminal = new DefaultTerminalFactory().createTerminal();
             screen = new TerminalScreen(terminal);
@@ -22,10 +24,10 @@ public class Game {
     }
     private void draw() throws IOException {
         screen.clear();
-        screen.setCharacter(10, 10, new TextCharacter('X'));
+        screen.setCharacter(x, y, new TextCharacter('X'));
         screen.refresh();
     }
-    public void run(){
+    public void run() throws IOException {
         Game game = new Game();
         game.draw();
     }
