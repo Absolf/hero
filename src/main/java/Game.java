@@ -1,4 +1,6 @@
 import com.googlecode.lanterna.TextCharacter;
+import com.googlecode.lanterna.input.KeyStroke;
+import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
@@ -9,8 +11,7 @@ public class Game {
     public TerminalScreen screen;
     private int x = 10;
     private int y = 10;
-
-    public Game(){
+    public Game() throws IOException {
         try {
             Terminal terminal = new DefaultTerminalFactory().createTerminal();
             screen = new TerminalScreen(terminal);
@@ -28,9 +29,19 @@ public class Game {
         screen.refresh();
     }
     public void run() throws IOException {
-        Game game = new Game();
-        game.draw();
+       draw();
     }
 
-   
+    /*
+    private void processKey(KeyStroke key) {
+        Game game = new Game();
+        game.draw();
+        KeyStroke key = screen.readInput();
+        game.processKey(key);
+        switch (key){
+
+        }
+
+        System.out.println(key);
+    }*/
 }
