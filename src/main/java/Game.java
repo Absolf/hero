@@ -1,17 +1,17 @@
 import com.googlecode.lanterna.TextCharacter;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
-import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
+
 import java.io.IOException;
 
 public class Game {
     public TerminalScreen screen;
-    private int x = 10;
-    private int y = 10;
+    Hero hero;
     public Game() throws IOException {
+        hero = new Hero(10,10);
         try {
             Terminal terminal = new DefaultTerminalFactory().createTerminal();
             screen = new TerminalScreen(terminal);
@@ -25,23 +25,35 @@ public class Game {
     }
     private void draw() throws IOException {
         screen.clear();
-        screen.setCharacter(x, y, new TextCharacter('X'));
+        hero.draw(screen);
         screen.refresh();
     }
     public void run() throws IOException {
-       draw();
+        while (true){
+            draw();
+            KeyStroke key = screen.readInput();
+            if (key.getKeyType() == KeyType.Character && key.getCharacter() == 'q')
+                screen.close();
+            if (key.getKeyType() == KeyType.EOF)
+                break;
+            processKey(key);
+        }
     }
 
-    /*
     private void processKey(KeyStroke key) {
-        Game game = new Game();
-        game.draw();
-        KeyStroke key = screen.readInput();
-        game.processKey(key);
-        switch (key){
-
-        }
-
+        if(key.getKeyType() == KeyType.ArrowUp)
+            moveHero(hero.moveUp());
+        if(key.getKeyType() == KeyType.ArrowDown)
+            moveHero(hero.moveDown());
+        if(key.getKeyType() == KeyType.ArrowLeft)
+            moveHero(hero.moveLeft());
+        if(key.getKeyType() == KeyType.ArrowRight)
+            moveHero(hero.moveRight());
         System.out.println(key);
-    }*/
+    }
+
+    private void moveHero(Position position) {
+        hero.setPosition(position);
+    }
 }
+
